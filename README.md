@@ -252,3 +252,11 @@ PHP 8.3 or above
 - [Dev Guide](https://developers.google.com/tag-manager/devguide)
 - [Quick Start](https://developers.google.com/tag-manager/quickstart)
 
+## Credits
+
+- [Anthony Pauwels](https://github.com/anthonypauwels)
+- [All Contributors](../../contributors)
+
+## License
+
+The MIT License (MIT). 
