@@ -88,6 +88,18 @@ DataLayer::withArray([
 ]);
 ```
 
+Both methods can be chained :
+
+```php
+DataLayer::with('foo', 'bar')
+->withArray([
+    'user_name' => 'John Doe',
+    'age' => '42',
+    'country' => 'Belgium',
+])
+->with('name', 'value')
+```
+
 Do not hesitate to check the prototype of the method to view all possibles options.
 
 ### In your views

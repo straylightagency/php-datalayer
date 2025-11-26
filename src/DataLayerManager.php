@@ -96,13 +96,13 @@ class DataLayerManager
      * @param array|string $name
      * @param array|string|null $value
      * @param bool $save
-     * @return string|null
+     * @return self
      *
      * @example
-     * DataLayer::with( 'name', 'value' );
+     * DataLayer::with( 'name', 'value' )->with( 'foo', 'bar' );
      * DataLayer::with( [ 'name' => 'value' ] );
      */
-    public function with(array|string $name, array|string $value = null, bool $save = false): string|null
+    public function with(array|string $name, array|string $value = null, bool $save = false): self
     {
         if ( is_array( $name ) ) {
             return $this->withArray( $name, $save );
@@ -114,7 +114,7 @@ class DataLayerManager
             $this->save();
         }
 
-        return null;
+        return $this;
     }
 
     /**
@@ -122,19 +122,17 @@ class DataLayerManager
      *
      * @param array $data
      * @param bool $save
-     * @return string
+     * @return self
      */
-    public function withArray(array $data, bool $save = false): string
+    public function withArray(array $data, bool $save = false): self
     {
-        $html = '';
-
         $this->data = array_merge( $this->data, $data );
 
         if ( $save ) {
             $this->save();
         }
 
-        return $html;
+        return $this;
     }
 
     /**
