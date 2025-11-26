@@ -1,0 +1,38 @@
+<?php
+namespace Straylightagency\DataLayer\Laravel;
+
+use Illuminate\Support\Facades\Facade;
+use Straylightagency\DataLayer\DataLayerManager;
+
+/**
+ * Facade.
+ * Provide quick access methods to the DataLayer helper class
+ *
+ * @method static void load()
+ * @method static void clear()
+ * @method static void save()
+ * @method static array getData()
+ * @method static array data()
+ * @method static string|null with(array|string $name, array|string $value = null, bool $save = false)
+ * @method static string withArray(array $data, bool $save = false)
+ * @method static void print(bool $init = true, bool $clear = true, bool $script = true)
+ * @method static void printNoScript($gtm_id = null)
+ * @method static string init()
+ * @method static string pushData(array $data, bool $clear = false)
+ * @method static string script($gtm_id = null)
+ * @method static string noScript($gtm_id = null)
+ * @method static void dump()
+ *
+ * @package Straylightagency\DataLayer
+ * @author Anthony Pauwels <anthony@straylightagency.be>
+ */
+class DataLayer extends Facade
+{
+    /**
+     * @return string
+     */
+    protected static function getFacadeAccessor(): string
+    {
+        return DataLayerManager::class;
+    }
+}

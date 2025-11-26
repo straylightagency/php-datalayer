@@ -1,0 +1,38 @@
+{
+    "name": "Straylightagency/datalayer",
+    "type": "library",
+    "description": "A helper package that help to generate Google's DataLayer script on pages",
+    "keywords": [
+        "datalayer",
+        "tags",
+        "google",
+        "gtm",
+        "helper"
+    ],
+    "authors": [
+        {
+            "name": "Anthony Pauwels",
+            "email": "anthony@straylightagency.be",
+            "homepage": "https://Straylightagency.be/"
+        }
+    ],
+    "require": {
+        "php": "^8.3"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Straylightagency\\DataLayer\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+              "DataLayerServiceProvider"
+            ],
+            "aliases": {
+                "DataLayer": "Straylightagency\\DataLayer\\Laravel\\DataLayer"
+            }
+        }
+    }
+}
