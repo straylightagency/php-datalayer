@@ -44,8 +44,7 @@ use Straylightagency\DataLayer\DataLayerManager;
 use Straylightagency\DataLayer\SessionHandler;
 
 $datalayer = new DataLayerManager( 
-                new SessionHandler,
-                'GTM-XXXXXXXX'
+                new SessionHandler, 'GTM-XXXXXXXX'
             );
 ```
 
@@ -81,23 +80,23 @@ DataLayer::with('foo', 'bar');
 #### Set an array of data in the DataLayer
 
 ```php
-DataLayer::withArray([
+DataLayer::withArray( [
     'user_name' => 'John Doe',
     'age' => '42',
     'country' => 'Belgium',
-]);
+] );
 ```
 
 Both methods can be chained :
 
 ```php
 DataLayer::with('foo', 'bar')
-->withArray([
-    'user_name' => 'John Doe',
-    'age' => '42',
-    'country' => 'Belgium',
-])
-->with('name', 'value')
+        ->withArray( [
+            'user_name' => 'John Doe',
+            'age' => '42',
+            'country' => 'Belgium',
+        ] )
+        ->with('name', 'value');
 ```
 
 Do not hesitate to check the prototype of the method to view all possibles options.
@@ -106,7 +105,7 @@ Do not hesitate to check the prototype of the method to view all possibles optio
 
 #### Publish the DataLayer in the view
 
-Just call this method in your app layout before the closing <HEAD> tag.
+Just call this method in your app layout before the closing `<HEAD>` tag.
 
 ```php
 DataLayer::print();
@@ -132,7 +131,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <!-- End Google Tag Manager -->
 ```
 
-Do not forget to call `DataLayer::printNoScript()` right after your <BODY> tag :
+Do not forget to call `DataLayer::printNoScript()` right after your `<BODY>` tag :
 
 ```php
 DataLayer::printNoScript();
@@ -166,11 +165,11 @@ It will just print this :
 #### Push an array of data in the DataLayer
 
 ```php
-DataLayer::pushData([
+DataLayer::pushData( [
     'user_name' => 'John Doe',
     'age' => '42',
     'country' => 'Belgium',
-], [clear: bool = false]);
+], [clear: bool = false] );
 ```
 
 ### Others methods
@@ -232,13 +231,13 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <!-- End Google Tag Manager -->
 ```
 
-Also, do not forget to add the <noscript> tag with noScript :
+Also, do not forget to add the `<noscript>` tag with noScript :
 
 ```php
 echo DataLayer::noScript([gtm_id: null|string = null]);
 ```
 
-... or printNoScript :
+... or use printNoScript :
 
 ```php
 DataLayer::printNoScript([gtm_id: null|string = null]);
