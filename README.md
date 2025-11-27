@@ -54,7 +54,7 @@ A static method is available to create a new instance using the basic session ha
 ```php
 use Straylightagency\DataLayer\DataLayerManager;
 
-$datalayer = DataLayerManager::newUsingSession('GTM-XXXXXXXX');
+$datalayer = DataLayerManager::newUsingBasicSession('GTM-XXXXXXXX');
 ```
 
 ### With Laravel

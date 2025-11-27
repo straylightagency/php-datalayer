@@ -19,7 +19,7 @@ class DataLayerServiceProvider extends BaseServiceProvider
     public function register():void
     {
         $this->app->singleton('datalayer', fn ( $app ) =>
-            new DataLayerManager( new SessionHandler( $app['session'] ), config('datalayer.gtm_id') )
+            DataLayerManager::newUsingLaravelSession( $app['session'], config('datalayer.gtm_id') )
         );
     }
 

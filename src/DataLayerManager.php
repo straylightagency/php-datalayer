@@ -2,6 +2,9 @@
 namespace Straylightagency\DataLayer;
 
 use Kint;
+use Illuminate\Session\SessionManager;
+use \Straylightagency\DataLayer\SessionHandler as BasicSessionHandler;
+use \Straylightagency\DataLayer\Laravel\SessionHandler as LaravelSessionHandler;
 
 /**
  * Helper class for handling DataLayer object with Google Tag Manager
@@ -41,9 +44,19 @@ class DataLayerManager
      * @param string $gtm_id
      * @return static
      */
-    static public function newUsingSession(string $gtm_id): static
+    static public function newUsingBasicSession(string $gtm_id): static
     {
-        return new self( new SessionHandler, $gtm_id );
+        return new self( new BasicSessionHandler, $gtm_id );
+    }
+
+    /**
+     * @param SessionManager $manager
+     * @param string $gtm_id
+     * @return static
+     */
+    static public function newUsingLaravelSession(SessionManager $manager, string $gtm_id): static
+    {
+        return new self( new LaravelSessionHandler( $manager ), $gtm_id );
     }
 
     /**
