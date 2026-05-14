@@ -1,5 +1,5 @@
 {
-    "name": "Straylightagency/datalayer",
+    "name": "straylightagency/datalayer",
     "type": "library",
     "description": "A helper package that help to generate Google's DataLayer script on pages",
     "keywords": [
