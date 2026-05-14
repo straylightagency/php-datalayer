@@ -24,13 +24,10 @@ Then add this line to your facades in `config/app.php` :
 'DataLayer' => Straylightagency\DataLayer\Laravel\DataLayer::class,
 ```
 
-Finally, add your GTM-ID in `config/datalayer.php`.
+Finally, add your GTM-ID in your `.env` file :
 
-```php
-<?php
-return [
-    'gtm_id' => 'GTM-XXXXXXXX'
-];
+```dotenv
+GOOGLE_TAG_MANAGER_ID="GTM-XXXXXXXX"
 ```
 
 ## Usage
@@ -57,8 +54,9 @@ $datalayer = DataLayerManager::newUsingBasicSession('GTM-XXXXXXXX');
 ```
 
 ### With Laravel
+The package handles initialization and configuration from the service provider. 
 
-The package provides by default a Facade for Laravel application. You can call methods directly using the Facade or use the alias instead.
+You can call methods from `DataLayerManager` directly using the Facade `DataLayer` or use the alias instead.
 ```php
 use Straylightagency\DataLayer\Laravel\DataLayer;
 

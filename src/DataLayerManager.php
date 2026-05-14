@@ -1,10 +1,10 @@
 <?php
 namespace Straylightagency\DataLayer;
 
-use Kint;
+use JetBrains\PhpStorm\NoReturn;
 use Illuminate\Session\SessionManager;
-use \Straylightagency\DataLayer\SessionHandler as BasicSessionHandler;
-use \Straylightagency\DataLayer\Laravel\SessionHandler as LaravelSessionHandler;
+use Straylightagency\DataLayer\SessionHandler as BasicSessionHandler;
+use Straylightagency\DataLayer\Laravel\SessionHandler as LaravelSessionHandler;
 
 /**
  * Helper class for handling DataLayer object with Google Tag Manager
@@ -14,14 +14,14 @@ use \Straylightagency\DataLayer\Laravel\SessionHandler as LaravelSessionHandler;
  */
 class DataLayerManager
 {
-    /** @var array */
-    protected array $data = [];
+    /** @var string */
+    protected string $gtm_id;
 
     /** @var SessionHandlerInterface */
     protected SessionHandlerInterface $session;
 
-    /** @var string */
-    protected string $gtm_id;
+    /** @var array */
+    protected array $data = [];
 
     /** @var string */
     const string SESSION_KEY = 'datalayer';
@@ -41,46 +41,62 @@ class DataLayerManager
     }
 
     /**
+     * Create a new DataLayerManager with a BasicSessionHandler.
+     *
      * @param string $gtm_id
-     * @return static
+     * @return self
      */
-    static public function newUsingBasicSession(string $gtm_id): static
+    static public function newUsingBasicSession(string $gtm_id): self
     {
         return new self( new BasicSessionHandler, $gtm_id );
     }
 
     /**
+     * Create a new DataLayerManager using the Laravel SessionManager.
+     *
      * @param SessionManager $manager
      * @param string $gtm_id
-     * @return static
+     * @return self
      */
-    static public function newUsingLaravelSession(SessionManager $manager, string $gtm_id): static
+    static public function newUsingLaravelSession(SessionManager $manager, string $gtm_id): self
     {
         return new self( new LaravelSessionHandler( $manager ), $gtm_id );
     }
 
     /**
      * Load data from the session
+     *
+     * @return self
      */
-    public function load(): void
+    public function load(): self
     {
         $this->data = array_merge( $this->session->get(), [] );
+
+        return $this;
     }
 
     /**
      * Clear all data from the array
+     *
+     * @return self
      */
-    public function clear(): void
+    public function clear(): self
     {
         $this->session->put( [] );
+
+        return $this;
     }
 
     /**
      * Save the data into the session
+     *
+     * @return self
      */
-    public function save(): void
+    public function save(): self
     {
         $this->session->put( $this->data );
+
+        return $this;
     }
 
     /**
@@ -149,7 +165,7 @@ class DataLayerManager
     }
 
     /**
-     * Print the datalayer object into the page; options can be used to control the init and the script
+     * Print the dataLayer object into the page; options can be used to control the init and the script
      *
      * @param bool $init
      * @param bool $script
@@ -186,7 +202,7 @@ class DataLayerManager
      * Init the JS DataLayer object
      * @return string
      */
-    public function init():string
+    public function init(): string
     {
         return '<script>window.dataLayer = window.dataLayer || []</script>' . PHP_EOL;
     }
@@ -198,7 +214,7 @@ class DataLayerManager
      * @param bool $clear
      * @return string
      */
-    public function pushData(array $data, bool $clear = true):string
+    public function pushData(array $data, bool $clear = true): string
     {
         $html = '';
 
@@ -216,12 +232,12 @@ class DataLayerManager
     }
 
     /**
-     * Print the Google tag manager init script with given Google id
+     * Print the Google Tag Manager init script with given Google id
      *
      * @param string|null $gtm_id
      * @return string
      */
-    public function script(?string $gtm_id = null):string
+    public function script(?string $gtm_id = null): string
     {
         $gtm_id = $gtm_id ?: $this->gtm_id;
 
@@ -236,12 +252,12 @@ class DataLayerManager
     }
 
     /**
-     * Print the Google tag manager no-script tag with given google id
+     * Print the Google Tag Manager no-script tag with given google id
      *
      * @param string|null $gtm_id
      * @return string
      */
-    public function noScript(?string $gtm_id = null):string
+    public function noScript(?string $gtm_id = null): string
     {
         $gtm_id = $gtm_id ?: $this->gtm_id;
 
@@ -257,17 +273,8 @@ class DataLayerManager
     #[NoReturn]
     public function dump(): void
     {
-        if ( function_exists( 'dd' ) ) {
-            dd( $this->data );
-        }
-
-        if ( ! in_array(PHP_SAPI, ['cli', 'phpdbg', 'embed'], true) && ! headers_sent() ) {
+        if ( ! in_array(PHP_SAPI, ['cli', 'phpdbg', 'embed'], true ) && ! headers_sent() ) {
             header('HTTP/1.1 500 Internal Server Error');
-        }
-
-        if ( class_exists( Kint::class ) ) {
-            Kint::dump( $this->data );
-            exit;
         }
 
         echo '<pre>';
