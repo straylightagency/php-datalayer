@@ -15,12 +15,14 @@ use Straylightagency\DataLayer\DataLayerManager;
  * @method static array data()
  * @method static DataLayerManager with(array|string $name, array|string $value = null, bool $save = false)
  * @method static DataLayerManager withArray(array $data, bool $save = false)
- * @method static void print(bool $init = true, bool $clear = true, bool $script = true)
- * @method static void printNoScript($gtm_id = null)
+ * @method static void print(bool $init = true, bool $clear = true, bool $script = true, array $attributes = [])
+ * @method static void printIf(bool $boolean, bool $init = true, bool $clear = true, bool $script = true, array $attributes = [])
+ * @method static void printNoScript(string $gtm_id = null)
+ * @method static void printNoScriptIf(bool $boolean, string $gtm_id = null)
  * @method static string init()
  * @method static string pushData(array $data, bool $clear = false)
- * @method static string script($gtm_id = null)
- * @method static string noScript($gtm_id = null)
+ * @method static string script(string $gtm_id = null, array $attributes = [])
+ * @method static string noScript(string $gtm_id = null)
  * @method static void dump()
  *
  * @package Straylightagency\DataLayer
