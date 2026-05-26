@@ -168,11 +168,12 @@ class DataLayerManager
      * Print the dataLayer object into the page; options can be used to control the init and the script
      *
      * @param bool $init
-     * @param bool $script
      * @param bool $clear
+     * @param bool $script
+     * @param array $attributes
      * @return void
      */
-    public function print(bool $init = true, bool $clear = true, bool $script = true): void
+    public function print(bool $init = true, bool $clear = true, bool $script = true, array $attributes = []): void
     {
         $html = '';
 
@@ -183,19 +184,52 @@ class DataLayerManager
         $html .= $this->pushData( $this->data, $clear );
 
         if ( $script ) {
-            $html .= $this->script( $this->gtm_id );
+            $html .= $this->script( $this->gtm_id, $attributes );
         }
 
         echo $html;
     }
 
     /**
-     * @param string|null $gtm_id
+     * Print the script tag if the condition is the given condition is true.
+     *
+     * @param bool $boolean
+     * @param bool $init
+     * @param bool $clear
+     * @param bool $script
+     * @param array $attributes
      * @return void
      */
-    public function printNoscript(?string $gtm_id = null):void
+    public function printIf(bool $boolean, bool $init = true, bool $clear = true, bool $script = true, array $attributes = []): void
     {
-        echo $this->noScript( $gtm_id );
+        if ( $boolean ) {
+            $this->print( $init, $clear, $script, $attributes );
+        }
+    }
+
+    /**
+     * Print the no-script tag if the condition is the given condition is true.
+     *
+     * @param bool $boolean
+     * @param string|null $gtm_id
+     * @param array $attributes
+     * @return void
+     */
+    public function printNoscriptIf(bool $boolean, ?string $gtm_id = null, array $attributes = []):void
+    {
+        if ( $boolean ) {
+            $this->printNoscript( $gtm_id, $attributes );
+        }
+    }
+
+    /**
+     * @param string|null $gtm_id
+     * @param array $attributes
+     * @return void
+     */
+    public function printNoscript(?string $gtm_id = null, array $attributes = []):void
+    {
+        echo $this->noScript( $gtm_id, $attributes );
     }
 
     /**
@@ -235,15 +269,18 @@ class DataLayerManager
      * Print the Google Tag Manager init script with given Google id
      *
      * @param string|null $gtm_id
+     * @param array $attributes
      * @return string
      */
-    public function script(?string $gtm_id = null): string
+    public function script(?string $gtm_id = null, array $attributes = []): string
     {
         $gtm_id = $gtm_id ?: $this->gtm_id;
 
+        $attributes = $this->arrayToHtmlAttributes( $attributes );
+
         return "
         <!-- Google Tag Manager -->
-        <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        <script $attributes>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
         new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
         j=d.createElement(s),dl=l!=='dataLayer'?'&l='+l:'';j.async=true;j.src=
         'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
@@ -255,15 +292,18 @@ class DataLayerManager
      * Print the Google Tag Manager no-script tag with given google id
      *
      * @param string|null $gtm_id
+     * @param array $attributes
      * @return string
      */
-    public function noScript(?string $gtm_id = null): string
+    public function noScript(?string $gtm_id = null, array $attributes = []): string
     {
         $gtm_id = $gtm_id ?: $this->gtm_id;
 
+        $attributes = $this->arrayToHtmlAttributes( $attributes );
+
         return "
         <!-- Google Tag Manager (noscript) -->
-        <noscript><iframe src=\"https://www.googletagmanager.com/ns.html?id=$gtm_id\" height=\"0\" width=\"0\" style=\"display:none;visibility:hidden\"></iframe></noscript>
+        <noscript><iframe $attributes src=\"https://www.googletagmanager.com/ns.html?id=$gtm_id\" height=\"0\" width=\"0\" style=\"display:none;visibility:hidden\"></iframe></noscript>
         <!-- End Google Tag Manager (noscript) -->" . PHP_EOL;
     }
 
@@ -289,5 +329,26 @@ class DataLayerManager
     public function __destruct()
     {
         $this->data = [];
+    }
+
+    /**
+     * Convert array into HTML Attributes
+     *
+     * @param array $attributes
+     * @return string
+     */
+    protected function arrayToHtmlAttributes(array $attributes): string
+    {
+        $result = [];
+
+        foreach ($attributes as $key => $value) {
+            $result[] = sprintf(
+                '%s="%s"',
+                htmlspecialchars((string) $key, ENT_QUOTES, 'UTF-8'),
+                htmlspecialchars((string) $value, ENT_QUOTES, 'UTF-8')
+            );
+        }
+
+        return implode(' ', $result);
     }
 }

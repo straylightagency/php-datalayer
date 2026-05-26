@@ -8,20 +8,15 @@ Data can be stored in session, like in a conversion funnel process, and be print
 
 Require this package with composer.
 ```shell
-composer require Straylightagency/datalayer
+composer require straylightagency/datalayer
 ```
 
 ### Laravel without auto-discovery:
 
-If you do not use auto-discovery, add the ServiceProvider to the providers array in `config/app.php` :
+If you do not use auto-discovery, add the ServiceProvider to the providers array in `bootstrap/providers.php` :
 
 ```php
-Straylightagency\DataLayer\Laravel\DataLayerServiceProvider::class,
-```
-
-Then add this line to your facades in `config/app.php` :
-```php
-'DataLayer' => Straylightagency\DataLayer\Laravel\DataLayer::class,
+\Straylightagency\DataLayer\Laravel\DataLayerServiceProvider::class,
 ```
 
 Finally, add your GTM-ID in your `.env` file :
