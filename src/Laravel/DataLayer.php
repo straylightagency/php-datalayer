@@ -17,7 +17,7 @@ use Straylightagency\DataLayer\DataLayerManager;
  * @method static DataLayerManager withArray(array $data, bool $save = false)
  * @method static void print(bool $init = true, bool $clear = true, bool $script = true, array $attributes = [])
  * @method static void printIf(bool $boolean, bool $init = true, bool $clear = true, bool $script = true, array $attributes = [])
- * @method static void printNoscript(string $gtm_id = null)
+ * @method static void printNoscript(string $gtm_id = null, array $attributes = [])
  * @method static void printNoscriptIf(bool $boolean, string $gtm_id = null, array $attributes = [])
  * @method static string init()
  * @method static string pushData(array $data, bool $clear = false)
