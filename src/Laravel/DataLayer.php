@@ -18,11 +18,11 @@ use Straylightagency\DataLayer\DataLayerManager;
  * @method static void print(bool $init = true, bool $clear = true, bool $script = true, array $attributes = [])
  * @method static void printIf(bool $boolean, bool $init = true, bool $clear = true, bool $script = true, array $attributes = [])
  * @method static void printNoScript(string $gtm_id = null)
- * @method static void printNoScriptIf(bool $boolean, string $gtm_id = null)
+ * @method static void printNoScriptIf(bool $boolean, string $gtm_id = null, array $attributes = [])
  * @method static string init()
  * @method static string pushData(array $data, bool $clear = false)
  * @method static string script(string $gtm_id = null, array $attributes = [])
- * @method static string noScript(string $gtm_id = null)
+ * @method static string noScript(string $gtm_id = null, array $attributes = [])
  * @method static void dump()
  *
  * @package Straylightagency\DataLayer
